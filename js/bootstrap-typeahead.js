@@ -192,7 +192,7 @@
             if (!that.ajax.xhr)
                 return;
             if (that.ajax.preProcess) {
-                data = that.ajax.preProcess(data);
+                data = that.ajax.preProcess(data, this.query);
             }
             // Save for selection retreival
             that.ajax.data = data;
