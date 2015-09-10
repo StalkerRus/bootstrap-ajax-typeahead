@@ -27,6 +27,7 @@
         that.matcher = that.options.matcher || that.matcher;
         that.render = that.options.render || that.render;
         that.onSelect = that.options.onSelect || null;
+        that.onSelected = that.options.onSelected || null;
         that.sorter = that.options.sorter || that.sorter;
         that.source = that.options.source || that.source;
         that.displayField = that.options.displayField || that.displayField;
@@ -93,6 +94,12 @@
             this.$element
                 .val(this.updater(text))
                 .change();
+            if (this.options.onSelected) {
+                this.options.onSelected({
+                    value: value,
+                    text: text
+                });
+            }
             return this.hide();
         },
         updater: function (item) {
@@ -491,6 +498,8 @@
         valueField: 'id',
         displayField: 'name',
         onSelect: function () {
+        },
+        onSelected: function () {
         },
         ajax: {
             url: null,

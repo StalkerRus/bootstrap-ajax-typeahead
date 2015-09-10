@@ -3,7 +3,7 @@
  * Copyright 2012-2015 Twitter Inc.
  * Licensed under MIT (https://github.com/biggora/bootstrap-ajax-typeahead/blob/master/LICENSE)
  * See Demo: http://plugins.upbootstrap.com/bootstrap-ajax-typeahead
- * Updated: 2015-04-05 11:43:56
+ * Updated: 2015-09-10 05:9:48
  *
  * Modifications by Paul Warelis and Alexey Gordeyev
  */
@@ -36,6 +36,7 @@
         that.matcher = that.options.matcher || that.matcher;
         that.render = that.options.render || that.render;
         that.onSelect = that.options.onSelect || null;
+        that.onSelected = that.options.onSelected || null;
         that.sorter = that.options.sorter || that.sorter;
         that.source = that.options.source || that.source;
         that.displayField = that.options.displayField || that.displayField;
@@ -102,6 +103,12 @@
             this.$element
                 .val(this.updater(text))
                 .change();
+            if (this.options.onSelected) {
+                this.options.onSelected({
+                    value: value,
+                    text: text
+                });
+            }
             return this.hide();
         },
         updater: function (item) {
@@ -192,7 +199,7 @@
             if (!that.ajax.xhr)
                 return;
             if (that.ajax.preProcess) {
-                data = that.ajax.preProcess(data, this.query);
+                data = that.ajax.preProcess(data);
             }
             // Save for selection retreival
             that.ajax.data = data;
@@ -500,6 +507,8 @@
         valueField: 'id',
         displayField: 'name',
         onSelect: function () {
+        },
+        onSelected: function () {
         },
         ajax: {
             url: null,
